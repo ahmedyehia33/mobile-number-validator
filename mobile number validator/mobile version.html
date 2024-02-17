@@ -1,0 +1,166 @@
+<style>
+
+
+body{background-color: rgba(59,59,79,255);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
+header{ display: flex;
+flex-direction: column;
+margin:5rem auto 1rem auto;
+justify-content: center;
+align-items:center;
+width:400px;
+text-align: center;}
+h1{text-align: center;
+color: rgb(255, 255, 255);
+font-size: 40px;}
+
+/*styling the mobile*/
+
+.mobile{width: 250px;
+height: 450px;
+background-color: black;
+display: flex;
+flex-direction: column;
+border-radius: 10px;
+margin:auto auto 5rem auto}
+
+.cam-container{width: 98%;
+height: 10%;
+
+display: flex;
+justify-content: center;
+align-items: center;}
+
+.cam{height:10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: rgb(253, 207, 207);
+}
+.screen{width:90%;
+    height: 80%;
+    background-color: rgb(253, 207, 207);
+    margin: -5px auto 1px auto;
+    text-align: center;
+    font-size: 16px;
+    font-weight:lighter;
+    font-stretch:extra-expanded;
+    
+}
+#user-input{height:40px;
+    width:90%;
+    border-radius: 15px;
+border:1px solid black;
+text-align: center;
+font-size: 20px;}
+.buttons-container{display: flex;
+justify-content: space-evenly;}
+button{background-color: rgb(253, 207, 207);
+width:35%;
+height: 25px;
+margin-top: 8px;
+border:3px solid rgb(243, 231, 231);
+font-weight: bolder;
+cursor:pointer;}
+#results-div {
+    max-height: 250px;
+    overflow-y: auto;
+}
+.valid-message {
+    color: rgb(69, 94, 69);
+    font-size: 20px;
+}
+
+.invalid-message {
+    color: rgb(110, 16, 16);
+font-size: 20px;
+}</style>
+<!DOCTYPE html>
+<html lang ="en">
+    <head> 
+        <link rel="stylesheet" type="text/css" href="mnv-css.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> MOBILE NUMBER VALDAITOR</title>
+    </head>
+    <body>
+         <!--header-->
+         <header>
+            <img src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg" alt="free code camp logo" width="250px">
+            <h1> Telephone Number Validator </h1>
+        
+         </header>
+   <!--Mobile Device-->
+   <div class="mobile">
+    <div class="cam-container">
+<div class="cam"></div></div>
+<div class="screen">
+    <p>
+        Enter a Phone Number:</p>
+    <input type="text" id="user-input"><div class="result-div" id="results-div"></div></div>
+    
+
+    <div class="buttons-container">
+        <button class="btn" type="button" id="check-btn">Check</button>
+    <button class="button" type="button" id="clear-btn">Clear</button>
+    </div>
+
+
+
+
+</div>
+
+  <script>
+  const numberInput = document.getElementById('user-input');
+const checkBtn = document.getElementById('check-btn');
+const clearBtn = document.getElementById('clear-btn');
+const result = document.getElementById('results-div');
+
+// Phone numbers valid forms
+const regI = /^1 \d{3}-\d{3}-\d{4}$/;
+const regII = /^1 (\(\d{3}\)|\d{3})-\d{3}-\d{4}$/;
+const regIII = /^1 ?(\(\d{3}\)|\d{3})[-\s]?\d{3}[-\s]?\d{4}$/;
+const regIV = /^1 ?(\d{3}[-\s]?\d{3}[-\s]?\d{4}|\(\d{3}\)[-?\s]?\d{3}[-\s]?\d{4})$/;
+const regV = /^(\d{3}[-\s]?\d{3}[-\s]?\d{4})$/;
+const regVI = /^(\(\d{3}\)[-?\s]?\d{3}[-\s]?\d{4})$/;
+
+const valid = [regI, regII, regIII, regIV, regV, regVI];
+
+const phoneCheck = () => {
+    const inputValue = numberInput.value.trim();
+
+    if (inputValue === "") {
+        window.alert('Please provide a phone number');
+        return;
+    }
+
+    let isValid = false;
+
+    for (const regex of valid) {
+        if (regex.test(inputValue)) {
+            isValid = true;
+            break;
+        }
+    }
+
+      const resultMessage = isValid
+        ? `<div class="valid-message">Valid US number: ${inputValue}</div>`
+        : `<div class="invalid-message">Invalid US number: ${inputValue}</div>`;
+
+   
+    result.innerHTML += resultMessage;
+
+};
+
+const clearScreen = () => {
+    numberInput.value = "";
+    result.innerHTML = "";
+};
+
+checkBtn.addEventListener('click', phoneCheck);
+clearBtn.addEventListener('click', clearScreen);
+  </script>
+    
+  
+     
+        </body>
+     </html>
